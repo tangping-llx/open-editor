@@ -14,7 +14,9 @@ export function openEditor(specifiedEditor: string = 'code', port: number | stri
     const open = (createOpenEditor as any)(specifiedEditor) as any
     open(req, res, next)
   })
-  server.listen(port, () => {
-    console.log('open in editor server run at http://127.0.0.1:' + port)
-  })
+  setTimeout(() => {
+    server.listen(port, () => {
+      console.log('open in editor server run at http://127.0.0.1:' + port)
+    })
+  }, 2000);
 }

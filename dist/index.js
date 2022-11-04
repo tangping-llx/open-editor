@@ -647,9 +647,11 @@ function openEditor(specifiedEditor = "code", port = 5001) {
     const open = (0, import_launch_editor_middleware.default)(specifiedEditor);
     open(req, res, next);
   });
-  server.listen(port, () => {
-    console.log("open in editor server run at http://127.0.0.1:" + port);
-  });
+  setTimeout(() => {
+    server.listen(port, () => {
+      console.log("open in editor server run at http://127.0.0.1:" + port);
+    });
+  }, 2e3);
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
