@@ -636,7 +636,8 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 var import_launch_editor_middleware = __toESM(require_launch_editor_middleware());
 var import_http = require("http");
-function openEditor(specifiedEditor = "code", port = 5001) {
+var import_net = require("net");
+async function openEditor(specifiedEditor = "code", port = 5001) {
   const server = (0, import_http.createServer)();
   server.on("request", (req, res) => {
     const next = () => {
@@ -647,11 +648,22 @@ function openEditor(specifiedEditor = "code", port = 5001) {
     const open = (0, import_launch_editor_middleware.default)(specifiedEditor);
     open(req, res, next);
   });
-  setTimeout(() => {
+  const canUse = await checkPort(port);
+  if (canUse) {
     server.listen(port, () => {
       console.log("open in editor server run at http://127.0.0.1:" + port);
     });
-  }, 2e3);
+  }
+}
+function checkPort(port) {
+  return new Promise((resolve) => {
+    const server = (0, import_net.createServer)();
+    server.on("listening", () => {
+      server.close();
+      resolve(true);
+    });
+    server.on("error", () => resolve(false));
+  });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
