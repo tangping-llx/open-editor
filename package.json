@@ -1,0 +1,23 @@
+{
+  "name": "@tonyptang/open-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup"
+  },
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "tsup": "^6.4.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "launch-editor-middleware": "^2.6.0"
+  }
+}
