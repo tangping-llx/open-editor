@@ -1,6 +1,6 @@
 {
   "name": "@tonyptang/open-editor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "launch-editor-middleware": "^2.6.0"
+  },
+  "repository": {
+    "url": "https://github.com/tangping-llx/open-editor.git"
   }
 }
