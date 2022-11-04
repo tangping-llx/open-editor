@@ -657,7 +657,7 @@ async function openEditor(specifiedEditor = "code", port = 5001) {
 }
 function checkPort(port) {
   return new Promise((resolve) => {
-    const server = (0, import_net.createServer)();
+    const server = (0, import_net.createServer)().listen(port);
     server.on("listening", () => {
       server.close();
       resolve(true);

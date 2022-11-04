@@ -9,8 +9,8 @@
   },
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "keywords": [],
-  "author": "",
+  "keywords": ["open", "in", "editor", "vscode"],
+  "author": "tonyptang",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.11.9",
