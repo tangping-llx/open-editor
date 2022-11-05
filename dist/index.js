@@ -649,11 +649,27 @@ async function openEditor(specifiedEditor = "code", port = 5001) {
     open(req, res, next);
   });
   const canUse = await checkPort(port);
+  const url = "http://127.0.0.1:" + port;
   if (canUse) {
     server.listen(port, () => {
-      console.log("open in editor server run at http://127.0.0.1:" + port);
+      console.log("open in editor server run at" + url);
     });
   }
+  return {
+    webpack: {
+      "/__open-in-editor": {
+        target: url
+      }
+    },
+    vite: {
+      "/__open-in-editor": {
+        target: url
+      }
+    },
+    rollup: {
+      "__open-in-editor": url
+    }
+  };
 }
 function checkPort(port) {
   return new Promise((resolve) => {
