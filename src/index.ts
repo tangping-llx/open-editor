@@ -2,7 +2,7 @@ import createOpenEditor from 'launch-editor-middleware'
 import { createServer } from 'http'
 import { createServer as _createServer } from 'net'
 
-export async function openEditor(specifiedEditor: string = 'code', port: number | string = 5001) {
+export function openEditor(specifiedEditor: string = 'code', port: number | string = 5001) {
 
   const server = createServer()
 
@@ -15,13 +15,15 @@ export async function openEditor(specifiedEditor: string = 'code', port: number 
     const open = (createOpenEditor as any)(specifiedEditor) as any
     open(req, res, next)
   })
-  const canUse = await checkPort(port)
   const url = 'http://127.0.0.1:' + port
-  if (canUse) {
-    server.listen(port, () => {
-      console.log('open in editor server run at' +  url)
-    })
-  }
+  checkPort(port).then(canUse => {
+    if (canUse) {
+      server.listen(port, () => {
+        console.log('open in editor server run at' +  url)
+      })
+    }
+  })
+  
   return {
     webpack: {
       '/__open-in-editor': {

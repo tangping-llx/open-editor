@@ -637,7 +637,7 @@ module.exports = __toCommonJS(src_exports);
 var import_launch_editor_middleware = __toESM(require_launch_editor_middleware());
 var import_http = require("http");
 var import_net = require("net");
-async function openEditor(specifiedEditor = "code", port = 5001) {
+function openEditor(specifiedEditor = "code", port = 5001) {
   const server = (0, import_http.createServer)();
   server.on("request", (req, res) => {
     const next = () => {
@@ -648,13 +648,14 @@ async function openEditor(specifiedEditor = "code", port = 5001) {
     const open = (0, import_launch_editor_middleware.default)(specifiedEditor);
     open(req, res, next);
   });
-  const canUse = await checkPort(port);
   const url = "http://127.0.0.1:" + port;
-  if (canUse) {
-    server.listen(port, () => {
-      console.log("open in editor server run at" + url);
-    });
-  }
+  checkPort(port).then((canUse) => {
+    if (canUse) {
+      server.listen(port, () => {
+        console.log("open in editor server run at" + url);
+      });
+    }
+  });
   return {
     webpack: {
       "/__open-in-editor": {
