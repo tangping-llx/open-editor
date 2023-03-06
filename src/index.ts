@@ -11,7 +11,8 @@ const unpluginOpenEditor = createUnplugin((options: Options = { editor: 'code' }
     vite: {
       async configureServer (server) {
         server.middlewares.use(PATH, createOpenEditor(editor))
-      }
+      },
+      apply: 'serve'
     },
     webpack(compiler) {
       compiler.hooks.environment.tap('unplugin-open-editor', async () => {
