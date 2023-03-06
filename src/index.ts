@@ -1,51 +1,36 @@
+// import { openEditor } from './core'
 import createOpenEditor from 'launch-editor-middleware'
-import { createServer } from 'http'
-import { createServer as _createServer } from 'net'
+import { createUnplugin} from 'unplugin'
 
-export async function openEditor(specifiedEditor: string = 'code', port: number | string = 5001) {
+const PATH = '/__open-in-editor'
 
-  const server = createServer()
-
-  server.on('request', (req, res) => {
-      const next = () => {
-        res.end(JSON.stringify({
-        data: 0
-      }))
-    }
-    const open = (createOpenEditor as any)(specifiedEditor) as any
-    open(req, res, next)
-  })
-  const canUse = await checkPort(port)
-  const url = 'http://127.0.0.1:' + port
-  if (canUse) {
-    server.listen(port, () => {
-      console.log('open in editor server run at' +  url)
-    })
-  }
+const unpluginOpenEditor = createUnplugin((options: Options = { editor: 'code' }) => {
+  const { editor } = options
   return {
-    webpack: {
-      '/__open-in-editor': {
-        target: url
-      }
-    },
+    name: 'unplugin-open-editor',
     vite: {
-      '/__open-in-editor': {
-        target: url
+      async configureServer (server) {
+        server.middlewares.use(PATH, createOpenEditor(editor))
       }
     },
-    rollup: {
-      '__open-in-editor': url
+    webpack(compiler) {
+      compiler.hooks.environment.tap('unplugin-open-editor', async () => {
+        compiler.options.devServer = {
+          ...compiler.options.devServer,
+          before(app) {
+            app.use(PATH, createOpenEditor(editor))
+            console.log(app);
+          }
+        }
+
+        console.log(compiler.options.devServer);
+      })
     }
   }
-}
+})
 
-function checkPort(port: number | string) {
-  return new Promise((resolve) => {
-    const server = _createServer().listen(port)
-    server.on('listening', () => {
-      server.close()
-      resolve(true)
-    })
-    server.on('error', () => resolve(false))
-  })
+export default unpluginOpenEditor
+
+export interface Options {
+  editor?: string
 }

@@ -1,4 +1,5 @@
 ```ts
+version: 1.x
 // entry file --vite.config.js  webpack.config.js...
 const { openEditor } = require('@tonyptang/open-editor')
 import { openEditor } from '@tonyptang/open-editor'
@@ -22,5 +23,12 @@ const { vite, webpack, rollup } = openEditor()
       ...webpack
     }
   }
+}
+
+version: 2.x
+import openEditor from '@tonyptang/open-editor/vite'
+
+{
+  plugins: [openEditor()]
 }
 ```
