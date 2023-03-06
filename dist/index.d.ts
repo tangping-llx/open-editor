@@ -1,4 +1,4 @@
-declare function openEditor(specifiedEditor?: string, port?: number | string): Promise<{
+declare function openEditor(specifiedEditor?: string, port?: number | string): {
     webpack: {
         '/__open-in-editor': {
             target: string;
@@ -12,6 +12,6 @@ declare function openEditor(specifiedEditor?: string, port?: number | string): P
     rollup: {
         '__open-in-editor': string;
     };
-}>;
+};
 
 export { openEditor };
