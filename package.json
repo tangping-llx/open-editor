@@ -1,12 +1,19 @@
 {
   "name": "@tonyptang/open-editor",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
     "p": "npm publish --access public"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
   },
   "exports": {
     "./vite": {
